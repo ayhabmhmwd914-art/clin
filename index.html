@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+    <head>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    
+    </head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منظومة فنشها الإدارية الاحترافية</title>
@@ -492,11 +497,29 @@ if (typeof XLSX !== 'undefined') {
     XLSX.cloudSystemId = firebaseConfig.projectId;
 }
 
-// 2. دالة حفظ البيانات سحابياً ومحلياً فوراً عند إضافة أي طلب جديد
+// الحفظ السحابي الحقيقي اللي بيسمع في كل الأجهزة
 function saveToCloudStorage(updatedData) {
-    localStorage.setItem('enterprise_orders', JSON.stringify(updatedData));
-    console.log("تم تأمين الحفظ السحابي والمحلي بنجاح.");
+    // التأكد من رفع البيانات لقاعدة بيانات فايربيز الحقيقية
+    if (typeof firebase !== 'undefined') {
+        const dbRef = firebase.database().ref('orders/');
+        dbRef.set(updatedData); 
+        console.log("تم الحفظ في السحاب.. أي جهاز هيفتح الرابط هيشوف البيانات دي!");
+    }
 }
+
+// استرجاع البيانات من السحاب فور فتح الصفحة من أي جهاز
+window.addEventListener('DOMContentLoaded', function() {
+    if (typeof firebase !== 'undefined') {
+        firebase.database().ref('orders/').on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                // تحديث الجدول بالبيانات اللي جاية من السحاب مباشرة
+                window.data = data; 
+                if (typeof updateDashboard === 'function') updateDashboard();
+            }
+        });
+    }
+});
 
 // 3. حماية الـ داتا الحالية ومراقبة دالة الإضافة لمنع اختفاء الأسماء
 if (typeof db === 'function') {
@@ -523,6 +546,7 @@ window.addEventListener('click', function(e) {
         }, 800);
     }
 });
+
 
 // 5. استرجاع البيانات المخزنة بمجرد فتح الصفحة أو عمل ريفريش
 window.addEventListener('DOMContentLoaded', function() {
