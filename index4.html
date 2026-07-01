@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أنيميشن احترافي مفنش</title>
+    <style>
+        /* خلفية البرنامج الداكنة الفخمة */
+        body {
+            background-color: #0b0f19;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* حاوية الإيموجي - المقاس الصغير والذكي الذي ضبطته */
+        .emoji-container {
+            position: relative;
+            width: 60px;   
+            height: 110px;  
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* الكود السحري لنسف الخلفية السوداء وجعلها شفافة */
+        .emoji-character {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: fill; 
+            opacity: 0;
+            
+            /* 👑 الحل النهائي: يدمج الصورة مع سواد الأبليكيشن ويطير أي خلفية سوداء حوالين الفني */
+            mix-blend-mode: screen; 
+            
+            /* أنيميشن وميض ناعم وثابت في مكانه */
+            animation: ultraSmoothSwitch 3.2s infinite ease-in-out;
+        }
+
+        /* توقيت التتابع بين المهن الأربعة لضمان النعومة */
+        .char-1 { animation-delay: 0s; }
+        .char-2 { animation-delay: 0.8s; }
+        .char-3 { animation-delay: 1.6s; }
+        .char-4 { animation-delay: 2.4s; }
+
+        /* حركة الوميض والتبديل (Fade Pure) */
+        @keyframes ultraSmoothSwitch {
+            0% { opacity: 0; }
+            12% { opacity: 1; }   /* تنور وتظهر الشخصية بوضوح */
+            25% { opacity: 1; }   /* تثبت منورة */
+            37% { opacity: 0; }   /* تطفي بنعومة تامة لينتقل للبس التالي */
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="emoji-container">
+        <img src="./WhatsApp Image 2026-07-01 at 2.01.09 PM (1).jpeg" class="emoji-character char-1" alt="فني">
+        <img src="./WhatsApp Image 2026-07-01 at 2.01.09 PM.jpeg" class="emoji-character char-2" alt="سباك">
+        <img src="./WhatsApp Image 2026-07-01 at 2.01.10 PM (1).jpeg" class="emoji-character char-3" alt="كهربائي">
+        <img src="./WhatsApp Image 2026-07-01 at 2.01.10 PM.jpeg" class="emoji-character char-4" alt="تكييف">
+    </div>
+
+</body>
+</html>
